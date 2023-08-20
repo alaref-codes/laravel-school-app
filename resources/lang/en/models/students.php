@@ -1,0 +1,4 @@
+<?php
+    return [
+        'plural'=>'plural'
+    ];
