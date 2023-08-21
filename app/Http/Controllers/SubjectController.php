@@ -7,6 +7,7 @@ use App\Http\Requests\UpdateSubjectRequest;
 use App\Repositories\SubjectRepository;
 use App\Http\Controllers\AppBaseController;
 use Illuminate\Http\Request;
+use App\DataTables\SubjectDataTable;
 use Flash;
 use Illuminate\Support\Facades\App;
 use Response;
@@ -28,12 +29,9 @@ class SubjectController extends AppBaseController
      *
      * @return Response
      */
-    public function index(Request $request)
+    public function index(SubjectDataTable $dataTable)
     {
-        $subjects = $this->subjectRepository->all();
-
-        return view('subjects.index')
-            ->with('subjects', $subjects);
+        return $dataTable->render('subjects.table_index');
     }
 
     /**

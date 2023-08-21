@@ -31,7 +31,7 @@ Route::get('locale/{locale}', function ($locale){
 });
 
 Route::resource('students', App\Http\Controllers\StudentController::class);
-Route::get('students/{id}/grades', [App\Http\Controllers\StudentController::class,'studentGrades'])->name('students.studentGrades');
+Route::get('students/{id}/grades', [App\Http\Controllers\StudentController::class,'studentGrades'])->name('students.studentGrades')->middleware("auth");
 Route::post('students/studentGrades/{id}', [App\Http\Controllers\StudentController::class,'updateStudentGrades'])->name('students.updateStudentGrades');
 
 Auth::routes();
