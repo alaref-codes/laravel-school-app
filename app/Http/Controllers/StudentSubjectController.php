@@ -163,5 +163,20 @@ class StudentSubjectController extends AppBaseController
         Flash::success('Student Subject deleted successfully.');
 
         return redirect(route('studentSubjects.index'));
+    }  
+    public function destroyTwo($id)
+    {
+        $studentSubject = $this->studentSubjectRepository->find($id);
+
+        if (empty($studentSubject)) {
+            Flash::error('Student Subject not found');
+            return redirect()->back();
+        }
+
+        $this->studentSubjectRepository->delete($id);
+
+        Flash::success('Student Subject deleted successfully.');
+        return redirect()->back();
+
     }
 }

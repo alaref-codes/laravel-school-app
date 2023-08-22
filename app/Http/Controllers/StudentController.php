@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\CreateStudentSubjectWithoutStudentIdRequest;
+use App\Http\Requests\CustomCreateStudentSubjectRequest;
 use App\Repositories\StudentSubjectRepository;
 use App\Http\Requests\CreateStudentRequest;
 use App\Http\Requests\UpdateStudentRequest;
@@ -94,18 +94,26 @@ class StudentController extends AppBaseController
     {
         $studentSubjects = StudentSubject::where('student_id', $id)->get();
         $subjects = Subject::select('id','name')->get();
-
         $student = $this->studentRepository->find($id);
+        $average = 0.0;
+        foreach ($studentSubjects as $grades) {
+            $midtermAverage = 0.0;
+            if ($grades->degree_type == 'midterm'){
+                $grades->degree = $grades->degree / 2;
+                $midtermAverage += $grades->degree;
+            }
+            $average += $grades->degree;
+        }
         // if (empty($studentSubjects)) {
         //     Flash::error('Student not found');
 
         //     return redirect(route('students.studentGrades'));
         // }
 
-        return view('students.studentGrades',compact('studentSubjects','student','subjects'));
+        return view('students.studentGrades',compact('studentSubjects','student','subjects','average'));
     }
 
-    public function updateStudentGrades($id,Request $request)
+    public function updateStudentGrades($id,CustomCreateStudentSubjectRequest $request)
     {
         $input = $request->all();
 
@@ -117,9 +125,13 @@ class StudentController extends AppBaseController
     
             };
         } else {
+            if ($request->degree > 40) {
+                Flash::error('أقصى درجة للامتحان النصفي هي 40');
+                return redirect()->back();
+            }
             $studentMidterms = StudentSubject::where('subject_id', $request->subject_id)->where('student_id',$id)->where('degree_type',$request->degree_type)->where('deleted_at',null)->get();
             if (count($studentMidterms) > 1) {
-                Flash::error('تم إدخال درجة الامتحان النهائي لهذه المادة مسبقا');
+                Flash::error('تم إدخال درجات الامتحان النصفي لهذه المادة مسبقا');
                 return redirect()->back();
     
             };

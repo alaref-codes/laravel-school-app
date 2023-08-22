@@ -56,10 +56,15 @@ class StudentSubject extends Model
     public static $rules = [
         'student_id' => 'required',
         'subject_id' => 'required',
-        'degree' => 'required|integer|between:0,100',
+        'degree' => 'required|integer|between:0,60',
         'degree_type' => 'required'
     ];
 
+    public static $rulesTwo = [
+        'subject_id' => 'required',
+        'degree' => 'required|integer|between:0,60',
+        'degree_type' => 'required'
+    ];
 
     public function students()
     {

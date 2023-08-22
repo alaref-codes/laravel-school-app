@@ -5,7 +5,7 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-12">
-                    <h1>Add Student Grade</h1>
+                    <h1>{{ $student->name }} Grades</h1>
                 </div>
             </div>
         </div>
@@ -32,6 +32,7 @@
                 
                 <div class="card-footer">
                     {!! Form::submit('Save', ['class' => 'btn btn-primary']) !!}
+                    <h5 style="display: inline"  >Average Score : {{ $average }} </h5>
                 </div>
             </div>
             <div class="form-group col-sm-6">

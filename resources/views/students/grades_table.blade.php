@@ -17,7 +17,7 @@
             <td>{{ $studentSubject->degree }}</td>
             <td>{{ $studentSubject->degree_type }}</td>
                 <td width="120">
-                    {!! Form::open(['route' => ['studentSubjects.destroy', $studentSubject->id], 'method' => 'delete']) !!}
+                    {!! Form::open(['route' => ['studentSubjects.destroyTwo', $studentSubject->id], 'method' => 'delete']) !!}
                     <div class='btn-group'>
                         <a href="{{ route('studentSubjects.show', [$studentSubject->id]) }}"
                            class='btn btn-default btn-xs'>
